@@ -28,7 +28,20 @@ public class Solution
     public int[] FindWorkerActivityMinutes(int[][] logs, int k)
     {
         // TODO: Implement your solution here
-        
-        throw new NotImplementedException();
+        int[] result = new int[k];
+        Dictionary<int, HashSet<int>> map = new Dictionary<int, HashSet<int>>();
+        for (int i = 0; i < logs.Length; i++)
+        {
+            map[logs[i][0]] = new HashSet<int>(logs[i][1]);
+        }
+        for(int  i = 0; i < map.Count;i++)
+        {
+            int count = map[i].Count;
+            if(count-1>=0 && count<=k)
+            {
+                result[count - 1]++;
+            }
+        }
+        return result;
     }
 }

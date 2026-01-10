@@ -25,8 +25,35 @@ public class Solution
     /// </remarks>
     public int[][] MergeProductionSchedules(int[][] schedules)
     {
-        // TODO: Implement your solution here
-        
-        throw new NotImplementedException();
+        if (schedules.Length == 0)
+            return schedules;
+
+        Array.Sort(schedules,(a, b)=>a[0].CompareTo(b[0]));
+        int n = schedules.Length;
+        int j = 0;
+        int k = 0;
+        int[][] res = new int[n][];
+        while (j < n)
+        {
+            int i = j;
+            int mini = schedules[j][0];
+            int maxi = schedules[j][1];
+
+            while (i < n - 1 && schedules[i][1] >= schedules[i + 1][0])
+            {
+                maxi = Math.Max(maxi,schedules[i + 1][1]);
+                i++;
+            }
+            res[k] = new int[2];
+            res[k][0] = mini;
+            res[k][1] = maxi;
+            k++;
+            j = i+1;
+        }
+        int[][] ans = new int[k][];
+        for (int x = 0; x < k; x++)
+            ans[x] = res[x];
+        return ans;
     }
 }
+
