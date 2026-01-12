@@ -25,23 +25,35 @@ public class Solution
     /// 
     /// Note: Contestants can use ANY approach - this is just one solution!
     /// </remarks>
-    public int[] FindWorkerActivityMinutes(int[][] logs, int k)
+    public class Solution
     {
-        // TODO: Implement your solution here
-        int[] result = new int[k];
-        Dictionary<int, HashSet<int>> map = new Dictionary<int, HashSet<int>>();
-        for (int i = 0; i < logs.Length; i++)
+        public int[] FindWorkerActivityMinutes(int[][] logs, int k)
         {
-            map[logs[i][0]] = new HashSet<int>(logs[i][1]);
-        }
-        for(int  i = 0; i < map.Count;i++)
-        {
-            int count = map[i].Count;
-            if(count-1>=0 && count<=k)
+            int[] result = new int[k];
+
+            Dictionary<int, HashSet<int>> map = new Dictionary<int, HashSet<int>>();
+            for (int i = 0; i < logs.Length; i++)
             {
-                result[count - 1]++;
+                int workerId = logs[i][0];
+                int minute = logs[i][1];
+
+                if (!map.ContainsKey(workerId))
+                {
+                    map[workerId] = new HashSet<int>();
+                }
+
+                map[workerId].Add(minute);
             }
+            foreach (var entry in map)
+            {
+                int wam = entry.Value.Count;
+                if (wam >= 1 && wam <= k)
+                {
+                    result[wam - 1]++;
+                }
+            }
+            return result;
         }
-        return result;
     }
 }
+
